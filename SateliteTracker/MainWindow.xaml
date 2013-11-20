@@ -1,0 +1,23 @@
+﻿<Window x:Class="SateliteTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="470">
+    <Grid>
+        <TabControl Margin="10,0,10,10" Height="234" VerticalAlignment="Bottom">
+            <TabItem Header="Elements">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TLE">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="TLEedit" Margin="10,0,10,37" TextWrapping="Wrap" Text="ISS (ZARYA)             &#xA;1 25544U 98067A   13324.20079427  .00017589  00000-0  31162-3 0   621&#xA;2 25544  51.6511  55.3774 0001070  99.6676 356.0430 15.50350904858906" Height="55" VerticalAlignment="Bottom"/>
+                    <Button x:Name="ProcessTLE" Content="Process" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="ProcessTLE_Click"/>
+                    <TextBlock x:Name="Altitude" HorizontalAlignment="Left" Margin="66,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="0000" Width="53"/>
+                    <TextBlock x:Name="Azimuth" HorizontalAlignment="Left" Margin="66,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="0000" Width="53"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Altitude:" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,26,0,0" TextWrapping="Wrap" Text="Azimuth:" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

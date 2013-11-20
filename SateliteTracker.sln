@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SateliteTracker", "SateliteTracker\SateliteTracker.csproj", "{370EAC6A-A9B0-45BF-B3DD-CF5FAAFAE34E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{99510ED5-99E0-405D-BCAC-9159A7426D61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orbit", "Orbit\Orbit.csproj", "{BAA5FE10-3E3A-4D5D-AB3D-4B50D6AC0321}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{370EAC6A-A9B0-45BF-B3DD-CF5FAAFAE34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{370EAC6A-A9B0-45BF-B3DD-CF5FAAFAE34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{370EAC6A-A9B0-45BF-B3DD-CF5FAAFAE34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{370EAC6A-A9B0-45BF-B3DD-CF5FAAFAE34E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99510ED5-99E0-405D-BCAC-9159A7426D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99510ED5-99E0-405D-BCAC-9159A7426D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99510ED5-99E0-405D-BCAC-9159A7426D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99510ED5-99E0-405D-BCAC-9159A7426D61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA5FE10-3E3A-4D5D-AB3D-4B50D6AC0321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA5FE10-3E3A-4D5D-AB3D-4B50D6AC0321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA5FE10-3E3A-4D5D-AB3D-4B50D6AC0321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA5FE10-3E3A-4D5D-AB3D-4B50D6AC0321}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
