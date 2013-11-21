@@ -17,6 +17,8 @@ namespace SateliteTracker
 {
     using System.Threading;
 
+    using SateliteTracker.Utils;
+
     using Zeptomoby.OrbitTools;
 
     /// <summary>
@@ -42,7 +44,6 @@ namespace SateliteTracker
             if (lines.Count() < 3) return;
             var nm = lines[0].TrimEnd(new char[] { ' ' });
             tle = new Tle(nm, lines[1], lines[2]);
-            orbit = new Orbit(tle);
 
         }
 
@@ -57,15 +58,28 @@ namespace SateliteTracker
 
         private void ShowData()
         {
-            if (tle != null && orbit != null)
+            if (tle != null)
             {
-                Site site = new Site(53.9, 27.5, 0.290); // 0.00 N, 100.00 W, 0 km altitude
-                EciTime eci = orbit.GetPosition(DateTime.UtcNow);
+                var Location = new LatLon(53.9, 27.56667);
+                var dt = DateTime.UtcNow;
+                var utils = new ASCOM.Astrometry.AstroUtils.AstroUtils();
+                
+                var MJDdate = utils.CalendarToMJD(dt.Day, dt.Month, dt.Year);
+                MJDdate += dt.TimeOfDay.TotalDays;
+                MJD.Text = MJDdate.ToString("f5");
+
+                orbit = new Orbit(tle);
+                Site site = new Site(Location.Lat, Location.Lon, 0.290);
+                EciTime eci = orbit.GetPosition(dt);
                 Topo topoLook = site.GetLookAngle(eci);
                 main.Altitude.Text = topoLook.ElevationDeg.ToString("f3");
                 main.Azimuth.Text = topoLook.AzimuthDeg.ToString("f3");
-                
+                var altAzm = new AltAzm(topoLook.ElevationDeg, topoLook.AzimuthDeg);
+                var RaDec = Utils.Utils.AltAzm2RaDec(altAzm, Location, dt, 0.29);
+                RA.Text = DMS.FromDeg(RaDec.Ra).ToString(":");
+                Dec.Text = DMS.FromDeg(RaDec.Dec).ToString(":");
             }
         }
+
     }
 }

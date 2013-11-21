@@ -15,6 +15,12 @@
                     <TextBlock x:Name="Azimuth" HorizontalAlignment="Left" Margin="66,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="0000" Width="53"/>
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Altitude:" VerticalAlignment="Top"/>
                     <TextBlock HorizontalAlignment="Left" Margin="10,26,0,0" TextWrapping="Wrap" Text="Azimuth:" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="RA" HorizontalAlignment="Left" Margin="180,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="0000" Width="84"/>
+                    <TextBlock x:Name="Dec" HorizontalAlignment="Left" Margin="180,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="0000" Width="84"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="124,10,0,0" TextWrapping="Wrap" Text="RA:" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="124,26,0,0" TextWrapping="Wrap" Text="Dec:" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="MJD" HorizontalAlignment="Left" Margin="66,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="0000" Width="104"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,56,0,0" TextWrapping="Wrap" Text="JD:" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
