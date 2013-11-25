@@ -98,17 +98,17 @@
 
         override public string ToString()
         {
-            return string.Format("{0:d2}°{1:d2}'{2,2:f1}\"", this.D, this.M, this.S);
+            return string.Format("{3}{0:d2}°{1:d2}'{2,2:f1}\"", this.D, this.M, this.S, this.Sign < 0 ? "-" : "");
         }
         
         public string ToString(string del)
         {
-            return string.Format("{0:d2}{3}{1:d2}{3}{2,2:f1}", this.D, this.M, this.S, del);
+            return string.Format("{4}{0:d2}{3}{1:d2}{3}{2,2:f1}", this.D, this.M, this.S, del, this.Sign < 0 ? "-" : "");
         }
         
         public string ToString(string del1, string del2)
         {
-            return string.Format("{0:d2}{3}{1:d2}{4}{2,2:f1}", this.D, this.M, this.S, del1, del2);
+            return string.Format("{5}{0:d2}{3}{1:d2}{4}{2,2:f1}", this.D, this.M, this.S, del1, del2, this.Sign < 0 ? "-" : "");
         }
     }
     public static class MyDMSExtension

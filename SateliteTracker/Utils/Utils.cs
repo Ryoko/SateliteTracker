@@ -47,21 +47,29 @@
 
         }
 
-        static public Coordinates AltAzm2RaDec(AltAzm altAzm, LatLon location, DateTime time, double elevation)
+        static public double JDtime(DateTime time)
         {
             var utils = new ASCOM.Astrometry.AstroUtils.AstroUtils();
             var MJDdate = utils.CalendarToMJD(time.Day, time.Month, time.Year);
             MJDdate += time.TimeOfDay.TotalDays + 2400000.5;
+            return MJDdate;
+        }
 
+        static public Coordinates AltAzm2RaDec(AltAzm altAzm, LatLon location, DateTime time, double elevation)
+        {
+            var JDdate = JDtime(time);
             var tfm = new ASCOM.Astrometry.Transform.Transform();
-            tfm.JulianDateTT = MJDdate;
+            var jdtt = tfm.JulianDateTT;
+            //tfm.JulianDateTT = JDdate;
             tfm.SiteElevation = elevation * 1000;
             tfm.SiteLatitude = location.Lat;
             tfm.SiteLongitude = location.Lon;
             tfm.SiteTemperature = 0;
             tfm.SetAzimuthElevation(altAzm.Azm, altAzm.Alt);
             tfm.Refresh();
-            var res = new Coordinates(tfm.RAJ2000, tfm.DecJ2000);
+//            var res = new Coordinates(tfm.RAJ2000, tfm.DecJ2000);
+//            var res = new Coordinates(tfm.RAApparent, tfm.DECApparent);
+            var res = new Coordinates(tfm.RATopocentric, tfm.DECTopocentric);
             return res;
         }
 
@@ -77,11 +85,44 @@
             tfm.SiteLatitude = location.Lat;
             tfm.SiteLongitude = location.Lon;
             tfm.SiteTemperature = 0;
-            tfm.SetJ2000(coord.Ra, coord.Dec);
+            tfm.SetApparent(coord.Ra, coord.Dec);
             tfm.Refresh();
 
             var res = new AltAzm(tfm.ElevationTopocentric, tfm.AzimuthTopocentric);
             return res;
+        }
+
+        public static Coordinates AltAzm2RaDec2(AltAzm altAzm, LatLon location, DateTime UTCtime, double elevation)
+        {
+            return new Coordinates(0, 0);
+        }
+
+        public static AltAzm RaDec2AltAzm2(Coordinates coord, LatLon location, DateTime UTCtime, double elevation)
+        {
+            var utils = new ASCOM.Astrometry.NOVAS.NOVAS31();
+
+            var ra = coord.Ra * 15;
+            var dec = coord.Dec;
+            var time = UTCtime.TimeOfDay.TotalHours;
+            var lat = location.Lat;
+            var lon = location.Lon;
+            var j200Time = utils.JulianDate((short)UTCtime.Year, (short)UTCtime.Month, (short)UTCtime.Day, time);
+            j200Time -= 2451545.0;
+            var LST =  100.46 + 0.985647 * j200Time + lon + 15 * time;
+            LST = LST.ToRange(0, 360);
+
+            var HA = (LST - ra).ToRange(0, 360);
+
+            var sinALT = Math.Sin(dec.ToRad()) * Math.Sin(lat.ToRad()) + Math.Cos(dec.ToRad()) * Math.Cos(lat.ToRad()) * Math.Cos(HA.ToRad());
+            var ALT = Math.Asin(sinALT);
+            var alt = ALT.ToDeg();
+
+            var cosA = (Math.Sin(dec.ToRad()) - Math.Sin(ALT) * Math.Sin(lat.ToRad())) / (Math.Cos(ALT) * Math.Cos(lat.ToRad()));
+            var A = Math.Acos(cosA).ToDeg();
+
+            var Azm = Math.Sin(HA.ToRad()) < 0 ? A : 360 - A;
+
+            return new AltAzm(alt, Azm);
         }
 
         static public double NowLST(LatLon location)
@@ -151,6 +192,24 @@
         public static byte[] ToBytes(this string val)
         {
             return val.Select((c, i) => (byte)c).ToArray();
+        }
+
+        public static double ToRange(this double val, double min, double max)
+        {
+            var v = val;
+            while (v < min) v += max;
+            while (v > max) v -= max;
+            return v;
+        }
+
+        public static double ToRad(this double val)
+        {
+            return val * Math.PI / 180;
+        }
+        
+        public static double ToDeg(this double val)
+        {
+            return val * 180 / Math.PI;
         }
     }
 

@@ -62,12 +62,9 @@ namespace SateliteTracker
             {
                 var Location = new LatLon(53.9, 27.56667);
                 var dt = DateTime.UtcNow;
-                var utils = new ASCOM.Astrometry.AstroUtils.AstroUtils();
-                
-                var MJDdate = utils.CalendarToMJD(dt.Day, dt.Month, dt.Year);
-                MJDdate += dt.TimeOfDay.TotalDays;
-                MJD.Text = MJDdate.ToString("f5");
 
+                var JDdate = Utils.Utils.JDtime(dt);
+                MJD.Text = JDdate.ToString("f5");
                 orbit = new Orbit(tle);
                 Site site = new Site(Location.Lat, Location.Lon, 0.290);
                 EciTime eci = orbit.GetPosition(dt);
@@ -76,8 +73,16 @@ namespace SateliteTracker
                 main.Azimuth.Text = topoLook.AzimuthDeg.ToString("f3");
                 var altAzm = new AltAzm(topoLook.ElevationDeg, topoLook.AzimuthDeg);
                 var RaDec = Utils.Utils.AltAzm2RaDec(altAzm, Location, dt, 0.29);
-                RA.Text = DMS.FromDeg(RaDec.Ra).ToString(":");
-                Dec.Text = DMS.FromDeg(RaDec.Dec).ToString(":");
+
+                var tt2 = Utils.Utils.RaDec2AltAzm2(
+                    new Coordinates(16.695, 36.466667),
+                    new LatLon(52.5, -1.9166667),
+                    new DateTime(1998, 8, 10, 23, 10, 00),
+                    0);
+                var ttt = Utils.Utils.RaDec2AltAzm2(RaDec, Location, dt, 0.2);
+
+                RA.Text = DMS.FromDeg(RaDec.Ra).ToString();
+                Dec.Text = DMS.FromDeg(RaDec.Dec).ToString();
             }
         }
 
